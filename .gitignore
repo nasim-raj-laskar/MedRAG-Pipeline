@@ -1,3 +1,6 @@
 .venv/
 .env
 creds.txt
+logs/
+vectorstore/
+RAG_bot.egg-info/
