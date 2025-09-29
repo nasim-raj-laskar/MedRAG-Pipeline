@@ -7,9 +7,11 @@ logger=get_logger(__name__)
 
 def get_embeddings_model():
     try:
-        logger.info("Initializing Hugging Face embedding model ...")
-        model = HuggingFaceEmbeddings(model_name="sentence-transformers/all-MiniLM-L6-v2")
-        logger.info("Hugging Face embedding model initialized successfully ...")
+        logger.info("Intializing  Huggingface embedding model")
+        model = HuggingFaceEmbeddings(model_name="sentence-transformers/all-MiniLM-L6-v2",             
+                                      model_kwargs={'device': 'cpu'}       
+                                      )          
+        logger.info("Huggingface embedding model loaded sucesfully....")          
         return model
     
     except Exception as e:

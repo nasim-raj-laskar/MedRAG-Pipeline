@@ -10,5 +10,7 @@ Requires-Dist: pypdf
 Requires-Dist: huggingface_hub
 Requires-Dist: flask
 Requires-Dist: python-dotenv
+Requires-Dist: sentence-transformers
+Requires-Dist: langchain_groq
 Dynamic: author
 Dynamic: requires-dist
