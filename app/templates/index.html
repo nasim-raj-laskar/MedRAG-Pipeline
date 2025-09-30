@@ -1,47 +1,84 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8" />
-    <title>🔍 AI Medical Chatbot</title>
-    <style>
-        body { font-family: Arial, sans-serif; margin: 2rem; }
-        .chat-container { max-width: 700px; margin: 0 auto; }
-        .message { margin-bottom: 1rem; padding: 0.75rem; border-radius: 10px; }
-        .user { background-color: #d1e7ff; text-align: right; }
-        .assistant { background-color: #f1f1f1; text-align: left; }
-        form { margin-top: 2rem; }
-        textarea { width: 100%; height: 3rem; padding: 0.5rem; font-size: 1rem; }
-        button { padding: 0.5rem 1rem; font-size: 1rem; margin-top: 0.5rem; }
-        .error { color: red; }
-        .clear-btn { margin-top: 1rem; }
-    </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🏥 AI Medical Assistant</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
 <body>
-    <div class="chat-container">
-        <h1>🔍 AI Medical Chatbot New Change</h1>
-
-        {% if error %}
-            <p class="error">{{ error }}</p>
-        {% endif %}
-
-        <div id="chat-box">
-            {% for msg in messages %}
-                <div class="message {{ msg.role }}">
-                    <strong>{{ msg.role|capitalize }}:</strong><br />
-                    {{ msg.content | nl2br | safe  }}
-                </div>
-            {% endfor %}
+    <div class="container">
+        <!-- Header Section -->
+        <div class="header">
+            <h1>
+                🏥 AI Medical Assistant
+            </h1>
+            <p class="subtitle">Your intelligent healthcare companion powered by advanced AI</p>
         </div>
 
-        <form method="post" action="{{ url_for('index') }}">
-            <textarea name="prompt" placeholder="Ask a medical question..." required></textarea>
-            <br />
-            <button type="submit">Send</button>
-        </form>
+        <!-- Chat Container -->
+        <div class="chat-container">
+            <!-- Error Message -->
+            {% if error %}
+                <div class="error-message">
+                    ⚠️ {{ error }}
+                </div>
+            {% endif %}
 
-        <form method="get" action="{{ url_for('clear') }}">
-            <button type="submit" class="clear-btn">Clear Chat</button>
-        </form>
+            <!-- Chat Messages -->
+            <div class="chat-messages" id="chat-messages">
+                {% if messages %}
+                    {% for msg in messages %}
+                        <div class="message {{ msg.role }}">
+                            <div class="message-content">
+                                <div class="message-header">
+                                    {% if msg.role == 'user' %}
+                                        👤 You
+                                    {% else %}
+                                        🏥 Medical Assistant
+                                    {% endif %}
+                                </div>
+                                <div class="message-text">
+                                    {{ msg.content | nl2br | safe }}
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                {% else %}
+                    <div class="empty-state">
+                        <div class="empty-state-icon">💬</div>
+                        <h3>Welcome to your AI Medical Assistant</h3>
+                        <p>Ask me any medical question and I'll provide you with accurate, evidence-based information to help with your healthcare needs.</p>
+                    </div>
+                {% endif %}
+            </div>
+
+            <!-- Input Section -->
+            <div class="input-section">
+                <form method="post" action="{{ url_for('index') }}" id="chat-form">
+                    <div class="input-form">
+                        <div class="input-wrapper">
+                            <textarea 
+                                name="prompt" 
+                                id="prompt"
+                                class="input-field"
+                                placeholder="Ask a medical question... (Press Enter to send, Shift+Enter for new line)"
+                                required
+                                rows="1"></textarea>
+                        </div>
+                        <button type="submit" class="send-button" id="send-button">
+                            ➤
+                        </button>
+                    </div>
+                </form>
+                
+                <form method="post" action="{{ url_for('clear') }}" style="display: inline;">
+                    <button type="submit" class="clear-button">🗑️ Clear Chat</button>
+                </form>
+            </div>
+        </div>
     </div>
+
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
 </body>
 </html>

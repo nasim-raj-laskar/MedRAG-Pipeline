@@ -27,9 +27,10 @@ def index():
         user_input = request.form.get("prompt")
 
         if user_input:
-            messages=session["messages"]
+            messages = list(session["messages"])
             messages.append({"role": "user", "content": user_input})
-            session["messages"]=messages
+            session["messages"] = messages
+            session.modified = True
 
             try:
                 qa_chain=create_qa_chain()
@@ -39,7 +40,8 @@ def index():
                 result=response.get("result","No response")
 
                 messages.append({"role": "assistant", "content": result})
-                session["messages"]=messages
+                session["messages"] = messages
+                session.modified = True
 
             except Exception as e:
                 error_msg=f"Error: {str(e)}"
@@ -48,7 +50,7 @@ def index():
         return redirect(url_for("index"))
     return render_template("index.html" , messages=session.get("messages" , []))
 
-@app.route("/clear", methods=["POST"])
+@app.route("/clear", methods=["GET", "POST"])
 def clear():
     session.pop("messages", None)
     return redirect(url_for("index"))
