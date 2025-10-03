@@ -111,10 +111,10 @@ flowchart TD
     I --> J[Vector Store Persistence<br/>vectorstore/db_faiss/]
     J --> K[Ready for Retrieval]
     
-    style A fill:#e1f5fe
-    style F fill:#f3e5f5
+    style A fill:#e8f5e8
+    style F fill:#e8f5e8
     style H fill:#e8f5e8
-    style K fill:#fff3e0
+    style K fill:#e8f5e8
 ```
 
 1. **Ingestion**: DirectoryLoader with PyPDFLoader for medical documents
