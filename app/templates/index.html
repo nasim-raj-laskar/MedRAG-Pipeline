@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>🏥 AI Medical Assistant</title>
+    <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='favicon.ico') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
 <body>
@@ -72,9 +73,12 @@
                     </div>
                 </form>
                 
-                <form method="post" action="{{ url_for('clear') }}" style="display: inline;">
-                    <button type="submit" class="clear-button">🗑️ Clear Chat</button>
-                </form>
+                <div style="display: flex; gap: 10px; margin-top: 10px;">
+                    <button type="button" class="export-button" id="export-button">📥 Export Chat</button>
+                    <form method="post" action="{{ url_for('clear') }}" style="display: inline;">
+                        <button type="submit" class="clear-button">🗑️ Clear Chat</button>
+                    </form>
+                </div>
             </div>
         </div>
     </div>

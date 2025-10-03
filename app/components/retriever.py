@@ -41,7 +41,7 @@ def create_qa_chain():
         qa_chain = RetrievalQA.from_chain_type(
             llm=llm,
             chain_type="stuff",
-            retriever=db.as_retriever(search_kwargs={'k': 1}),
+            retriever=db.as_retriever(search_kwargs={'k': 3, 'score_threshold': 0.7}),
             return_source_documents=False,
             chain_type_kwargs={'prompt': set_custom_prompt()}
         )

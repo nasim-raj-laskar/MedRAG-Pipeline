@@ -55,6 +55,25 @@ def clear():
     session.pop("messages", None)
     return redirect(url_for("index"))
 
+@app.route("/health")
+def health_check():
+    try:
+        from datetime import datetime
+        # Test basic functionality
+        qa_chain = create_qa_chain()
+        status = "healthy" if qa_chain is not None else "unhealthy"
+        return {
+            "status": status,
+            "timestamp": datetime.now().isoformat(),
+            "service": "Medical RAG Bot"
+        }
+    except Exception as e:
+        return {
+            "status": "unhealthy", 
+            "error": str(e),
+            "timestamp": datetime.now().isoformat()
+        }, 500
+
 if __name__=="__main__":
     app.run(host="0.0.0.0",port=5000,debug=False,use_reloader=False)
 
